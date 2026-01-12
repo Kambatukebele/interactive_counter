@@ -5,11 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive counter</title>
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <!-- DM Sans font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .interactive {
+        max-width: 600px;
+        margin: 0px auto;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      .interactive__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+      .interactive__title {
+        height: 100px;
+      }
+      .interactive__title--title {
+        font-size: 48px;
+        font-weight: 500;
+      }
+      .interactive__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .interactive__count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+      .button {
+        padding: 16px 20px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+      .count {
+        font-size: 24px;
+      }
+      .interactive__input {
+        margin-top: 50px;
+      }
+      .interactive__input input {
+        padding: 16px;
+        border-radius: 4px;
+        border: 0.5 solid black;
+        font-size: 16px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Interactive counter</h1>
+    <section class="interactive">
+      <div class="interactive__container">
+        <div class="interactive__title">
+          <h1 class="interactive__title--title">Interactive counter</h1>
+        </div>
+        <div class="interactive__wrapper">
+          <div class="interactive__count">
+            <button class="button button-descrease">Decrease</button>
+            <span class="count">0</span>
+            <button class="button button-increase">Increase</button>
+          </div>
+          <div class="interactive__reset">
+            <button class="button button-reset">Reset</button>
+          </div>
+        </div>
+        <div class="interactive__input">
+          <input
+            type="number"
+            placeholder="Enter count"
+            value="0"
+            class="count_input"
+          />
+        </div>
+      </div>
+    </section>
     <!-- JavaScript -->
-    <script src="./main.js"></script>
+    <script>
+      const btnDescrease = document.querySelector(".button-descrease");
+      const btnIncrease = document.querySelector(".button-increase");
+      const btnReset = document.querySelector(".button-reset");
+      let count = 0;
+      let inputCount = document.querySelector(".count_input");
+
+      inputCount.addEventListener("change", (e) => {
+        count = e.target.value;
+        document.querySelector(".count").innerHTML = count;
+      });
+
+      btnIncrease.addEventListener("click", increaseCount);
+      btnDescrease.addEventListener("click", descreaseCount);
+      btnReset.addEventListener("click", resetCount);
+      function inputValueForm() {}
+      function increaseCount() {
+        //Increase the count by +1
+        count++;
+        //Assigne the count value to display in the HTML
+        document.querySelector(".count").innerHTML = count;
+        //Check if the decreased button has a disabled attribute. if yes, to remove it
+        if (btnDescrease.hasAttribute("disabled")) {
+          btnDescrease.removeAttribute("disabled");
+        }
+        // if count is equal to 10, to set an attribute of disable, to disable the button
+        if (count === 10) {
+          btnIncrease.setAttribute("disabled", "disabled");
+        }
+        // change the count color to green, if it is positive, more than 0
+        if (count > 0) {
+          document.querySelector(".count").style.color = "green";
+        }
+      }
+      function descreaseCount() {
+        //Decrease the count by -1
+        count--;
+        //Assigne the count value to display in the HTML
+        document.querySelector(".count").innerHTML = count;
+        //Check if the Increased button has a disabled attribute. if yes, to remove it
+        if (btnIncrease.hasAttribute("disabled")) {
+          btnIncrease.removeAttribute("disabled");
+        }
+        // if count is equal to -10, to set an attribute of disable, to disable the button
+        if (count === -10) {
+          btnDescrease.setAttribute("disabled", "disabled");
+        }
+        // change the count color to red, if it is negative, less than 0
+        if (count < 0) {
+          document.querySelector(".count").style.color = "red";
+        }
+      }
+      function resetCount() {
+        //Reset the count to 0
+        count = 0;
+        //Assigne the count value to display in the HTML
+        document.querySelector(".count").innerHTML = count;
+        //Check if the Increased and the decreased button has a disabled attribute. if yes, to remove it
+        if (
+          btnIncrease.hasAttribute("disabled") ||
+          btnDescrease.hasAttribute("disabled")
+        ) {
+          btnIncrease.removeAttribute("disabled");
+          btnDescrease.removeAttribute("disabled");
+        }
+        // change the count color to black, when it is equal to 0
+        if (count === 0) {
+          document.querySelector(".count").style.color = "black";
+        }
+      }
+    </script>
   </body>
 </html>
